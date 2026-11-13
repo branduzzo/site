@@ -85,19 +85,6 @@ PORT=4173 node server.js
 
 The server is about eighty lines. It serves static files, sends a real 404 page for anything missing and adds a handful of security headers. HTML is sent with `no-store`; CSS and JavaScript are cached for a year, which is why the links carry a `?v=` number.
 
-## Deploying
-
-The site runs on a small VPS behind nginx and Cloudflare. A deploy is a copy and a restart:
-
-```bash
-scp -r ./* user@server:/var/www/branduzzo.it/
-ssh user@server "chown -R www-data:www-data /var/www/branduzzo.it && systemctl restart branduzzo.service"
-```
-
-When you change CSS or JavaScript, bump the `?v=` in the HTML. Cloudflare and the browser will happily keep the old file otherwise. Images are cached for 30 days, HTML is not cached at all.
-
-To put the site in maintenance mode, create a `.maintenance` file in the docroot. nginx will answer every request with a 503 and the maintenance page until you remove it.
-
 ## Easter eggs
 
 They are not part of the content, they are just there for people who poke around.
